@@ -3,14 +3,14 @@ import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:client/core/theme/app_palette.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _LoginPageState extends State<LoginPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,8 +21,9 @@ class _SignupPageState extends State<SignupPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-    formKey.currentState!.validate(); 
+    formKey.currentState!.validate();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,44 +38,34 @@ class _SignupPageState extends State<SignupPage> {
               Text(
                 'Raagam',
                 style: TextStyle(
-                  fontSize: 50, 
+                  fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Pallete.gradient2,
                 ),
               ),
               const SizedBox(height: 30),
-              CustomField(
-                hintText: 'Name', 
-                controller: nameController
-              ),
+              CustomField(hintText: 'Email', controller: emailController),
               const SizedBox(height: 15),
               CustomField(
-                hintText: 'Email', 
-                controller: emailController
-              ),
-              const SizedBox(height: 15),
-              CustomField(
-                hintText: 'Password', 
+                hintText: 'Password',
                 controller: passwordController,
                 obscureText: true,
               ),
               const SizedBox(height: 15),
-              AuthGradientButton(buttonText: 'Sign Up',
-                onTap: () {},
-              ),
+              AuthGradientButton(buttonText: 'Sign In', onTap: () {}),
               const SizedBox(height: 15),
               RichText(
                 text: TextSpan(
-                  text: 'Already have an account ?',
+                  text: "Don't have an account ?",
                   style: Theme.of(context).textTheme.titleMedium,
                   children: [
                     TextSpan(
-                      text: ' Sign In',
+                      text: ' Sign Up',
                       style: const TextStyle(
                         color: Pallete.gradient2,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

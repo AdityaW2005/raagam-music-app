@@ -1,5 +1,5 @@
 import 'package:client/core/theme/theme.dart';
-import 'package:client/features/auth/view/pages/signup_page.dart';
+import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Spotify Clone',
+      title: 'Raagam Music App',
       theme: AppTheme.darkThemeMode,
-      home: const SignupPage(),
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

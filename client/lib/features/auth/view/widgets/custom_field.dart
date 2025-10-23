@@ -14,7 +14,7 @@ class CustomField extends StatelessWidget {
         hintText: hintText,
       ),
       validator: (value) {
-        if (value!.isEmpty){
+        if (value!.trim().isEmpty){
           return "$hintText is missing";
         }
         return null;
