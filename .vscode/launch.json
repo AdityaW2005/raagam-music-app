@@ -34,6 +34,13 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "client (Flutter iPhone 17)",
+            "cwd": "client",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "A7BD7BAA-034B-4478-95BF-0B19A722495D"
         }
     ]
 }
