@@ -1,7 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = FastAPI()
+DATABASE_URL = 'postgresql://postgres:musicapp123@localhost:5433/fluttermusicapp'
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit = False)
 
 class UserCreate(BaseModel):
     name: str
