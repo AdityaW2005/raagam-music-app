@@ -1,3 +1,4 @@
+import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,9 @@ class _SignupPageState extends State<SignupPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-    formKey.currentState!.validate(); 
+    formKey.currentState!.validate();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,30 +39,31 @@ class _SignupPageState extends State<SignupPage> {
               Text(
                 'Raagam',
                 style: TextStyle(
-                  fontSize: 50, 
+                  fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Pallete.gradient2,
                 ),
               ),
               const SizedBox(height: 30),
-              CustomField(
-                hintText: 'Name', 
-                controller: nameController
-              ),
+              CustomField(hintText: 'Name', controller: nameController),
+              const SizedBox(height: 15),
+              CustomField(hintText: 'Email', controller: emailController),
               const SizedBox(height: 15),
               CustomField(
-                hintText: 'Email', 
-                controller: emailController
-              ),
-              const SizedBox(height: 15),
-              CustomField(
-                hintText: 'Password', 
+                hintText: 'Password',
                 controller: passwordController,
                 obscureText: true,
               ),
               const SizedBox(height: 15),
-              AuthGradientButton(buttonText: 'Sign Up',
-                onTap: () {},
+              AuthGradientButton(
+                buttonText: 'Sign Up',
+                onTap: () async {
+                  await AuthRemoteRepository().signup(
+                    name: nameController.text,
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                },
               ),
               const SizedBox(height: 15),
               RichText(
@@ -74,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                         color: Pallete.gradient2,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
