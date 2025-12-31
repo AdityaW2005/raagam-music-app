@@ -1,27 +1,10 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from routes import auth
+from server.models.base import Base
+from database import engine
 
 app = FastAPI()
-DATABASE_URL = 'postgresql://postgres:musicapp123@localhost:5433/fluttermusicapp'
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit = False, autoflush = False, bind = engine)
-db = SessionLocal()
 
-class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
+app.include_router(auth.router, prefix = '/auth')
 
-@app.post('/signup')
-
-def signup_user(user: UserCreate):
-    # Extract the data that is coming from Request
-    print(user.name)
-    print(user.email)
-    print(user.password)
-    
-    # Check if the user already exists in db
-    # Else add the user to the db
-    pass
+Base.metadata.create_all(engine)
