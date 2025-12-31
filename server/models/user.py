@@ -1,5 +1,5 @@
 from sqlalchemy import TEXT, VARCHAR, Column, LargeBinary
-from server.models.base import Base
+from models.base import Base
 
 class User(Base):
     __tablename__ = "users"
