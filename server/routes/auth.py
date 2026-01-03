@@ -2,11 +2,11 @@ import uuid
 import bcrypt
 from fastapi import Depends, HTTPException
 from fastapi import APIRouter
-from models.user import User
-from pydantic_schemas.user_create import UserCreate
-from database import get_db
+from server.models.user import User
+from server.pydantic_schemas.user_create import UserCreate
+from server.database import get_db
 from sqlalchemy.orm import Session
-from pydantic_schemas.user_login import UserLogin
+from server.pydantic_schemas.user_login import UserLogin
 
 router = APIRouter()
 

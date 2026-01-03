@@ -21,4 +21,3 @@ class MyApp extends StatelessWidget {
 }
 
 // main.dart
-// Happy New Year 2026
