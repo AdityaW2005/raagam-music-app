@@ -41,15 +41,11 @@ class AuthRemoteRepository {
     }
   }
 
-  Future<Either<AppFailure, UserModel>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<AppFailure, UserModel>> getCurrentUserData(String token) async {
     try {
-      final response = await http.post(
-        Uri.parse('${ServerConstant.serverURL}/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'email': email, 'password': password}),
+      final response = await http.get(
+        Uri.parse('${ServerConstant.serverURL}/auth/'),
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
@@ -57,11 +53,7 @@ class AuthRemoteRepository {
         return Left(AppFailure(resBodyMap['detail']));
       }
 
-      return Right(
-        UserModel.fromMap(
-          resBodyMap['user'],
-        ).copyWith(token: resBodyMap['token']),
-      );
+      return Right(UserModel.fromMap(resBodyMap).copyWith(token: token));
     } catch (e) {
       return Left(AppFailure(e.toString()));
     }
