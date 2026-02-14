@@ -10,13 +10,11 @@ part 'auth_viewmodel.g.dart';
 class AuthViewmodel extends _$AuthViewmodel {
   late AuthRemoteRepository _authRemoteRepository;
   late AuthLocalRepository _authLocalRepository;
-  late CurrentUserNotifier _currentUserNotifier;
 
   @override
   AsyncValue<UserModel>? build() {
     _authRemoteRepository = ref.watch(authRemoteRepositoryProvider);
     _authLocalRepository = ref.watch(authLocalRepositoryProvider);
-    _currentUserNotifier = ref.watch(currentUserProvider.notifier);
     return null;
   }
 
@@ -51,44 +49,42 @@ class AuthViewmodel extends _$AuthViewmodel {
     required String password,
   }) async {
     state = const AsyncValue.loading();
-    // TODO: Implement when backend provides login endpoint
-    // final res = await _authRemoteRepository.login(
-    //   email: email,
-    //   password: password,
-    // );
-    //
-    // final val = switch (res) {
-    //   Left(value: final l) => state = AsyncValue.error(
-    //     l.message,
-    //     StackTrace.current,
-    //   ),
-    //   Right(value: final r) => _loginSuccess(r),
-    // };
-    // print(val);
+    final res = await _authRemoteRepository.login(
+      email: email,
+      password: password,
+    );
+
+    final val = switch (res) {
+      Left(value: final l) => state = AsyncValue.error(
+        l.message,
+        StackTrace.current,
+      ),
+      Right(value: final r) => _loginSuccess(r),
+    };
+    print(val);
+  }
+
+  AsyncValue<UserModel>? _loginSuccess(UserModel user) {
+    _authLocalRepository.setToken(user.token);
+    ref.read(currentUserProvider.notifier).addUser(user);
+    return state = AsyncValue.data(user);
   }
 
   Future<UserModel?> getData() async {
-    state = const AsyncValue.loading();
     final token = _authLocalRepository.getToken();
 
     if (token != null) {
       final res = await _authRemoteRepository.getCurrentUserData(token);
-      final val = switch (res) {
-        Left(value: final l) => state = AsyncValue.error(
-          l.message,
-          StackTrace.current,
-        ),
-        Right(value: final r) => _getDataSuccess(r),
-      };
 
-      return val.value;
+      switch (res) {
+        case Left(value: final l):
+          print('getData error: ${l.message}');
+          return null;
+        case Right(value: final r):
+          return r;
+      }
     }
 
     return null;
-  }
-
-  AsyncValue<UserModel> _getDataSuccess(UserModel user) {
-    _currentUserNotifier.addUser(user);
-    return state = AsyncValue.data(user);
   }
 }

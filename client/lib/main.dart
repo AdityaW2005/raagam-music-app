@@ -10,7 +10,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final container = ProviderContainer();
   await container.read(authViewmodelProvider.notifier).initSharedPreferences();
-  await container.read(authViewmodelProvider.notifier).getData();
+  final user = await container.read(authViewmodelProvider.notifier).getData();
+  if (user != null) {
+    container.read(currentUserProvider.notifier).addUser(user);
+  }
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
