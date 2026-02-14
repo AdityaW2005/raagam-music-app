@@ -26,7 +26,7 @@ final class AuthLocalRepositoryProvider
         argument: null,
         retry: null,
         name: r'authLocalRepositoryProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -55,4 +55,4 @@ final class AuthLocalRepositoryProvider
 }
 
 String _$authLocalRepositoryHash() =>
-    r'6746592282db87ba034c4b98bddff664de55fdc7';
+    r'4997658913f9b8ca4ef9f6396b78c449ec13991b';
